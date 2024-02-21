@@ -1,0 +1,31 @@
+.celda_contenedor{
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box,#DDDDDD, 5, 0, 0, 7);
+}
+
+.celda_contenedor Line{
+    -fx-stroke: #EEEEEE;
+}
+
+.celda_contenedor FontAwesomeIconView {
+    -fx-fill: #000000;
+}
+
+.saldo_cantidad_lbl{
+    -fx-background-color: #132A13;
+    -fx-border-radius: 2;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 5;
+    -fx-font-weight: 700;
+}
+
+.saldo_cantidad_lbl FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}
+
+.num_cuenta_lbl{
+    -fx-text-fill: #000000;
+    -fx-font-weight: 700;
+    -fx-font-size: 1.5em;
+}

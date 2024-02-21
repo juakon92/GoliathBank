@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="celda_contenedor"
+            stylesheets="@../../Styles/TransaccionCelda.css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
+   <VBox prefHeight="50.0" prefWidth="50.0" styleClass="trans_icon_contenedor" AnchorPane.bottomAnchor="5.0"
+         AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
+      <FontAwesomeIconView fx:id="in_icon" glyphName="LONG_ARROW_RIGHT" size="17" />
+      <FontAwesomeIconView fx:id="out_icon" glyphName="LONG_ARROW_LEFT" size="17" />
+   </VBox>
+   <Label fx:id="etiquetaFechTran" layoutX="64.0" layoutY="22.0" styleClass="trans_fecha_lbl" text="07/02/2024"
+          AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="22.0"/>
+   <Label fx:id="etiquetaRemitente" layoutX="212.0" layoutY="22.0" styleClass="trans_remitenten_lbl" text="Juan"
+          AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="22.0"/>
+   <Line endY="20.0" layoutX="337.0" layoutY="30.0" AnchorPane.bottomAnchor="21.5" AnchorPane.leftAnchor="300.0"/>
+   <Label fx:id="etiquetaDestinatario" layoutX="344.0" layoutY="22.0" styleClass="trans_remitenten_lbl" text="Jose"
+          AnchorPane.leftAnchor="358.0" AnchorPane.topAnchor="22.0"/>
+   <Label fx:id="etiquetaCantidad" layoutX="476.0" layoutY="15.0" styleClass="trans_cantidad_lbl" text="2000 €"
+          AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="15.0">
+      <graphic>
+         <FontAwesomeIconView glyphName="EUR" />
+      </graphic>
+   </Label>
+</AnchorPane>

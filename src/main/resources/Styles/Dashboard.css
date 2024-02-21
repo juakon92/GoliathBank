@@ -1,0 +1,170 @@
+
+.dashboard{
+    -fx-background-color: #EEEEEE;
+}
+
+.user_name{
+    -fx-font-size: 2.6em;
+    -fx-font-family: "Cantarell Light";
+}
+
+.date_lbl{
+    -fx-text-fill: #AAAAAA;
+    -fx-font-size: 1.1em;
+    -fx-font-family: "Cantarell Light";
+}
+
+.cabecera_titulo{
+    -fx-font-size: 1.4em;
+    -fx-font-family: "Cantarell Light";
+}
+
+/*Vista cuentas*/
+
+.cuentas_vista{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10 0 0 10;
+    -fx-padding: 10 0 10 0;
+    -fx-alignment: center;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #DDDDDD;
+    -fx-spacing: 10;
+}
+
+.cuenta{
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 10, 0, 0, 10);
+}
+
+.cuenta VBox{
+    -fx-background-color: #FFFFFF;
+}
+.cuenta Text{
+    -fx-fill: #FFFFFF;
+    -fx-font-family: "Cantarell Light";
+    -fx-font-size: 1.5em;
+}
+
+.cuenta_degradado{
+    -fx-background-color: linear-gradient(to right, #132A13, #253F25);
+}
+
+.cuenta FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}
+
+.balance_cuenta{
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: Cantarell;
+    -fx-font-size: 2.7em;
+    -fx-font-weight: bold;
+}
+
+.numero_cuenta{
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Cantarell";
+    -fx-font-size: 1.4em;
+    -fx-text-alignment: center;
+}
+
+/*Vista Mostrar Cuentas*/
+
+.vista_resumen{
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 5 10 5 10;
+    -fx-spacing: 5;
+    -fx-alignment: center_left;
+}
+
+.resumen_contenedor{
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: center_left;
+}
+
+.resumen_contenedor FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}
+
+.resumen_contenedor Button{
+    -fx-background-color: linear-gradient(to right, #132A13,#253F25);
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+    -fx-pref-width: 230;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Cantarell Light";
+    -fx-text-fill: #FFFFFF;
+}
+
+.resumen_contenedor Button:hover{
+    -fx-cursor: hand;
+}
+
+.cantidad_ingreso{
+    -fx-text-fill: #00AA00;
+    -fx-font-family: "Cantarell Light";
+    -fx-font-size: 1.5em;
+}
+
+.cantidad_gastos{
+    -fx-text-fill: #AA0000;
+    -fx-font-family: "Cantarell Light";
+    -fx-font-size: 1.5em;
+}
+
+/*Vista Transacciones*/
+
+.lista_transacciones{
+    -fx-background-color: #EEEEEE;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: #AAAAAA;
+}
+
+.lista_transacciones .scroll-bar:vertical{
+    -fx-scale-x: 0;
+}
+
+list-cell{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 15 0 15 0;
+}
+
+/*Vista Envio de dinero*/
+
+.nueva_trans_contenedor{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 20 10 20 10;
+    -fx-spacing: 10;
+    -fx-alignment: center_left;
+}
+
+.nueva_trans_contenedor Label{
+    -fx-font-family: "Cantarell Light";
+    -fx-font-size: 1.3em;
+}
+
+.nueva_trans_contenedor TextField{
+    -fx-pref-height: 40;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+}
+
+.nueva_trans_contenedor FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}
+
+.nueva_trans_contenedor Button{
+    -fx-background-color: linear-gradient(to right, #132A13,#253F25);
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+    -fx-pref-width: 230;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Cantarell Light";
+    -fx-text-fill: #FFFFFF;
+}
+.nueva_trans_contenedor Button:hover{
+    -fx-cursor: hand;
+}
+
+.addCuenta CheckBox{
+    -fx-padding: 10;
+    -fx-spacing: 15;
+}

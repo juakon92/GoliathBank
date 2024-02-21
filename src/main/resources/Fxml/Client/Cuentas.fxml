@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="cuentas_vista_contenedor" stylesheets="@../../Styles/Cuentas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.jpf.goliathbank_v2.Controllers.Client.CuentasController">
+   <Text layoutX="392.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cuentas" AnchorPane.leftAnchor="392.0" AnchorPane.topAnchor="48.109397888183594" />
+   <ListView fx:id="listado_cuentas" prefHeight="303.0" prefWidth="822.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
+   <ComboBox fx:id="seleccion_cuenta" layoutX="283.0" layoutY="438.0" prefWidth="150.0" />
+   <TextField fx:id="cajaCantidad" layoutX="283.0" layoutY="507.0" />
+   <CheckBox fx:id="checkbox_add" layoutX="283.0" layoutY="580.0" mnemonicParsing="false" text="INGRESAR" />
+   <CheckBox fx:id="checkbox_less" layoutX="488.0" layoutY="580.0" mnemonicParsing="false" text="RETIRAR" />
+   <Button fx:id="bntOk" layoutX="283.0" layoutY="625.0" mnemonicParsing="false" text="ACEPTAR" >
+      <graphic>
+         <FontAwesomeIconView glyphName="CHECK_SQUARE" size="20"/>
+      </graphic>
+   </Button>
+</AnchorPane>

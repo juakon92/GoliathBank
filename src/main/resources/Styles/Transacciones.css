@@ -1,0 +1,20 @@
+
+.transacciones_contenedor{
+    -fx-background-color: #EEEEEE;
+}
+
+.transacciones_contenedor Text{
+    -fx-fill: #000000;
+    -fx-font-size: 2.5em;
+    -fx-font-family: "Cantarell Light";
+}
+
+.transacciones_contenedor list-view{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 10;
+}
+
+.transacciones_contenedor .list-cell{
+    -fx-background-color: #EEEEEE;
+    -fx-pref-width: 800;
+}

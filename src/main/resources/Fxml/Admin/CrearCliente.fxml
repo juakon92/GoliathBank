@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="crear_cliente_contenedor" stylesheets="@../../Styles/CrearCliente.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.jpf.goliathbank_v2.Controllers.Admin.CrearClienteController">
+    <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear Nueva Cuenta de Cliente" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+    <VBox fillWidth="false" layoutX="14.0" layoutY="47.0" prefHeight="700.0" prefWidth="600.0">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
+        <TextField fx:id="cajaName" prefHeight="24.0" prefWidth="188.0" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos:" />
+        <TextField fx:id="cajaApellidos" prefHeight="24.0" prefWidth="188.0" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
+        <TextField fx:id="cajaEmail" prefHeight="24.0" prefWidth="186.0" />
+        <Text layoutX="10.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+        <PasswordField fx:id="cajaPass" prefHeight="24.0" prefWidth="185.0" />
+        <Text layoutX="10.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Móvil Asociado:" />
+        <TextField fx:id="cajaMovil" prefHeight="24.0" prefWidth="186.0" />
+        <Text layoutX="10.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cuentas:" />
+        <CheckBox fx:id="cc_cuenta_box" mnemonicParsing="false" text="Añadir Cuenta Corriente" />
+        <Text layoutX="10.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número de Cuenta:" />
+        <TextField fx:id="cajaCC" disable="true" layoutX="10.0" layoutY="106.0" prefHeight="24.0" prefWidth="186.0" />
+        <CheckBox fx:id="ca_cuenta_box" layoutX="10.0" layoutY="236.0" mnemonicParsing="false" text="Añadir Saldo" />
+        <Text fx:id="etiquetaSaldo" layoutX="10.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saldo Inicial Cuenta Corriente:" />
+        <TextField fx:id="cajaCA" layoutX="10.0" layoutY="270.0" prefHeight="24.0" prefWidth="186.0" />
+        <Button fx:id="btnCrearCliente" mnemonicParsing="false" text="Crear Nuevo Cliente" />
+        <Label fx:id="error_lbl" styleClass="error_lbl" text="Error:" />
+    </VBox>
+</AnchorPane>

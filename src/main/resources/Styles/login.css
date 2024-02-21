@@ -1,0 +1,73 @@
+.login_contenedor {
+    -fx-background-color: #EEEEEE;
+}
+/*Estilo del contenedor del Logo*/
+.login_contenedor_logo{
+    -fx-background-color: #132A13;
+    -fx-alignment: center;
+}
+
+.login_contenedor_logo Text{
+    -fx-font-size: 2em;
+    -fx-fill: #FFFFFF;
+}
+
+.login_contenedor_logo FontAwesomeIconView{
+    -fx-fill: #ECF39E;
+}
+
+/*Estilo seleccion tipo de cuenta*/
+.cuenta_selector{
+    -fx-background-color: #ECF39E;
+}
+
+.cuenta_selector .label{
+    -fx-text-fill: #132A13;
+    -fx-font-size: 1.1em;
+}
+
+.cuenta_selector .arrow{
+    -fx-background-color: #132A13;
+}
+
+#choice-box-popup-menu{
+    -fx-background-color: #ECF39E;
+}
+
+/*Estilos formulario Login*/
+
+#choice-promt-text{
+    -fx-font-weight: 400;
+}
+
+.login_contenedor_formulario{
+    -fx-spacing: 15;
+    -fx-alignment: top_left;
+}
+
+.login_contenedor_formulario Label{
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+
+.input_field{
+    -fx-background-color: #FFFFFF;
+    -fx-pref-height: 35;
+    -fx-font-size: 1.2em;
+}
+
+.login_contenedor_formulario Button{
+    -fx-background-color: #132A13;
+    -fx-text-fill: #FFFFFF;
+    -fx-pref-width: 350;
+    -fx-pref-height: 30;
+    -fx-font-size: 1.2em;
+}
+
+.login_contenedor_formulario Button:hover{
+    -fx-cursor: hand;
+}
+
+.error_lbl{
+    -fx-text-fill: #FF0000;
+}

@@ -1,0 +1,38 @@
+
+.celda_contenedor{
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box,#DDDDDD, 5, 0, 0, 7);
+}
+
+.trans_icon_contenedor{
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+    -fx-spacing: 5;
+}
+
+.trans_fecha_lbl{
+    -fx-text-fill: #AAAAAA;
+    -fx-font-weight: 700;
+}
+
+.trans_remitenten_lbl{
+    -fx-text-fill: #000000;
+    -fx-font-weight: 700;
+}
+
+.celda_contenedor Line{
+    -fx-stroke: #EEEEEE;
+}
+
+.trans_cantidad_lbl{
+    -fx-background-color: #132A13;
+    -fx-border-radius: 2;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 5;
+    -fx-font-weight: 700;
+}
+
+.trans_cantidad_lbl FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}

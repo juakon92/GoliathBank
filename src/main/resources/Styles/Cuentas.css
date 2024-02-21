@@ -1,0 +1,50 @@
+.cuentas_vista_contenedor{
+    -fx-background-color: #EEEEEE;
+}
+
+.cuentas_vista_contenedor Text{
+    -fx-fill: #888888;
+    -fx-font-size: 3em;
+    -fx-font-family: "Cantarell Light";
+}
+
+.cuentas_vista_contenedor list-view{
+    -fx-background-color: #EEEEEE;
+    -fx-padding: 10;
+}
+
+.cuentas_vista_contenedor .list-cell{
+    -fx-background-color: #EEEEEE;
+    -fx-pref-width: 800;
+}
+
+.cuentas_vista_contenedor ComboBox{
+    -fx-background-color: #ECF39E;
+    -fx-pref-width: 285;
+    -fx-pref-height: 35;
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+}
+
+.cuentas_vista_contenedor TextField{
+    -fx-pref-width: 285;
+    -fx-pref-height: 35;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+}
+
+.cuentas_vista_contenedor FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}
+
+.cuentas_vista_contenedor Button{
+    -fx-background-color: linear-gradient(to right, #132A13, #253F25);
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+    -fx-pref-width: 285;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Cantarell Light";
+    -fx-text-fill: #FFFFFF;
+}
+
+.cuentas_vista_contenedor Button:hover{
+    -fx-cursor: hand;
+}

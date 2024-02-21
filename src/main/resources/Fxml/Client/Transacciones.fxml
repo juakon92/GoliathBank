@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="transacciones_contenedor"
+            stylesheets="@../../Styles/Transacciones.css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="es.jpf.goliathbank_v2.Controllers.Client.TransaccionesController">
+   <Text layoutX="324.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transacciones"
+         AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="14.0"/>
+   <ListView fx:id="listadoTransacciones" layoutX="14.0" layoutY="83.0" prefHeight="640.0" prefWidth="830.0"
+             AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="100.0" AnchorPane.rightAnchor="14.0"/>
+</AnchorPane>

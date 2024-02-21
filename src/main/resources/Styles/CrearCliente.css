@@ -1,0 +1,48 @@
+.crear_cliente_contenedor{
+    -fx-background-color: #EEEEEE;
+}
+
+.crear_cliente_contenedor Text{
+    -fx-font-size: 1.2em;
+    -fx-fill: #888888;
+}
+
+.crear_cliente_contenedor VBox{
+    -fx-border-width: 0 0 0 1;
+    -fx-border-color: #000000;
+    -fx-padding: 10;
+    -fx-spacing: 15;
+}
+
+.crear_cliente_contenedor TextField{
+    -fx-pref-width: 250;
+    -fx-pref-height: 35;
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+}
+
+.crear_cliente_contenedor PasswordField{
+    -fx-pref-width: 250;
+    -fx-pref-height: 35;
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+}
+
+.crear_cliente_contenedor Button{
+    -fx-background-color: linear-gradient(to right,#132A13,#253F25);
+    -fx-effect: dropshadow(three-pass-box,#AAAAAA, 3, 0, 0, 3);
+    -fx-pref-width: 250;
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Cantarell Light";
+    -fx-text-fill: #FFFFFF;
+}
+
+.crear_cliente_contenedor Button:hover{
+    -fx-cursor: hand;
+}
+
+.error_lbl{
+    -fx-text-fill: #FF0000;
+}
