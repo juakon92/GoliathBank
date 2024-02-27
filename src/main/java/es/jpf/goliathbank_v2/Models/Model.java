@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Model {
     private static Model model;
     private final FactoriaView factoriaView;
-    private final DatabaseDriver databaseDriver;
+    private final DatabaseDriverHibernate databaseDriver;
     private TipoCuenta tipoCuentaLogin = TipoCuenta.CLIENTE;
 
     private final ObservableList<Transaccion> ultimasTransacciones;
@@ -33,7 +33,7 @@ public class Model {
     private Model(){
 
         this.factoriaView = new FactoriaView();
-        this.databaseDriver = new DatabaseDriver();
+        this.databaseDriver = new DatabaseDriverHibernate();
         //Sección Datos Cliente
         this.clienteLogeado = false;
         this.cliente = new Cliente("","","",null,null);
@@ -55,7 +55,7 @@ public class Model {
         return factoriaView;
     }
 
-    public DatabaseDriver getDatabaseDriver() {return databaseDriver;}
+    public DatabaseDriverHibernate getDatabaseDriver() {return databaseDriver;}
 
     public boolean getClienteLogeado(){return this.clienteLogeado;}
 

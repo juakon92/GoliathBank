@@ -1,6 +1,7 @@
 module es.jpf.goliathbank_v2 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.naming;
     requires java.sql;
 
     requires org.controlsfx.controls;
@@ -8,6 +9,8 @@ module es.jpf.goliathbank_v2 {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires org.hibernate.orm.core;
+    requires jakarta.persistence;
 
     opens es.jpf.goliathbank_v2 to javafx.fxml;
     exports es.jpf.goliathbank_v2;
