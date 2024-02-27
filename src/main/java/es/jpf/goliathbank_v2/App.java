@@ -9,4 +9,8 @@ public class App extends Application {
     public void start(Stage stage){
         Model.getInstance().getFactoriaView().mostrarVentanaLogin();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
