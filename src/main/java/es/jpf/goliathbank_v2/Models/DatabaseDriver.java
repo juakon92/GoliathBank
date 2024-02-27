@@ -408,13 +408,17 @@ public class DatabaseDriver {
         return resultSet;
     }
     private void initDatabase(){
-        try{
-            crearTablaUsuario();
-            crearTablaAdmin();
-            crearTablaCuenta();
-            crearTablaTransaccion();
-            insertarAdmin("admin","admin");
-        }catch (SQLException e){
+        try {
+            if (!tablasCreadas()) {
+                crearTablaUsuario();
+                crearTablaAdmin();
+                crearTablaCuenta();
+                crearTablaTransaccion();
+            }
+            if (!adminYaInsertado()) {
+                insertarAdmin("admin", "admin");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -461,6 +465,38 @@ public class DatabaseDriver {
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean tablasCreadas() {
+        try {
+            DatabaseMetaData metaData = con.getMetaData();
+
+            // Verificar si las tablas existen
+            ResultSet usuarioTable = metaData.getTables(null, null, "usuario", null);
+            ResultSet adminTable = metaData.getTables(null, null, "admin", null);
+            ResultSet cuentaTable = metaData.getTables(null, null, "cuenta", null);
+            ResultSet transaccionTable = metaData.getTables(null, null, "transaccion", null);
+
+            return usuarioTable.next() && adminTable.next() && cuentaTable.next() && transaccionTable.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean adminYaInsertado() {
+        try {
+            String query = "SELECT COUNT(*) FROM admin";
+            try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                int rowCount = resultSet.getInt(1);
+                return rowCount > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
