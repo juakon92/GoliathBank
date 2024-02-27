@@ -1,17 +1,42 @@
 package es.jpf.goliathbank_v2.Models;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class DatabaseDriverHibernate{
+    private final SessionFactory sessionFactory;
+
+    public DatabaseDriverHibernate() {
+        StandardServiceRegistry ssr = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(ssr).getMetadataBuilder().build();
+        this.sessionFactory = metadata.getSessionFactoryBuilder().build();
+    }
 
     public ResultSet getClientDatos(String email, String password) {
         return null;
     }
 
-    public ResultSet getAdminDatos(String email, String password) {
+    public Admin getAdminDatos(String email, String password) {
+        try (Session session = sessionFactory.openSession()) {
+            // Supongo que tienes una entidad Admin mapeada en Hibernate
+            Query<Admin> query = session.createQuery("FROM Admin WHERE usuario = :email AND pass = :password", Admin.class);
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al obtener datos de admin: " + e.getMessage());
+        }
         return null;
     }
 

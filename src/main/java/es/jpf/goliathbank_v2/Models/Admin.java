@@ -1,28 +1,42 @@
 package es.jpf.goliathbank_v2.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import jakarta.persistence.*;
 
 
 @Entity
 @Table (name = "Admin")
 public class Admin {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private int id;
+    @Column(name="usuario")
+    private String usuario;
+    @Column(name="pass")
+    private String pass;
 
-    private final StringProperty usuario;
-    private final StringProperty pass;
+    public Admin() {
+        // Constructor vacío requerido por Hibernate
+    }
 
     public Admin(String usuario, String pass) {
-        this.usuario = new SimpleStringProperty(this, "Usuario", usuario);
-        this.pass = new SimpleStringProperty(this, "Password", pass);
+        this.usuario = usuario;
+        this.pass = pass;
     }
 
-    public StringProperty usuarioProperty() {
-        return this.usuario;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public StringProperty passProperty() {
-        return this.pass;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

@@ -13,6 +13,7 @@ module es.jpf.goliathbank_v2 {
     requires jakarta.persistence;
 
     opens es.jpf.goliathbank_v2 to javafx.fxml;
+    opens es.jpf.goliathbank_v2.Models to org.hibernate.orm.core;
     exports es.jpf.goliathbank_v2;
     exports es.jpf.goliathbank_v2.Controllers;
     exports es.jpf.goliathbank_v2.Controllers.Admin;

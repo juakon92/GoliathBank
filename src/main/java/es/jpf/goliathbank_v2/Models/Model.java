@@ -4,6 +4,8 @@ import es.jpf.goliathbank_v2.Views.FactoriaView;
 import es.jpf.goliathbank_v2.Views.TipoCuenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -13,7 +15,8 @@ import java.time.LocalDate;
 public class Model {
     private static Model model;
     private final FactoriaView factoriaView;
-    private final DatabaseDriverHibernate databaseDriver;
+    private final DatabaseDriverHibernate databaseDriver2;
+    private final DatabaseDriver databaseDriver;
     private TipoCuenta tipoCuentaLogin = TipoCuenta.CLIENTE;
 
     private final ObservableList<Transaccion> ultimasTransacciones;
@@ -24,7 +27,7 @@ public class Model {
     private final Cliente cliente;
     private boolean clienteLogeado;
     //Sección Datos Admin
-    private final Admin admin;
+    private Admin admin;
     private boolean adminLogeado;
 
     private Cliente clienteActual;
@@ -33,7 +36,8 @@ public class Model {
     private Model(){
 
         this.factoriaView = new FactoriaView();
-        this.databaseDriver = new DatabaseDriverHibernate();
+        this.databaseDriver2 = new DatabaseDriverHibernate();
+        this.databaseDriver = new DatabaseDriver();
         //Sección Datos Cliente
         this.clienteLogeado = false;
         this.cliente = new Cliente("","","",null,null);
@@ -55,7 +59,7 @@ public class Model {
         return factoriaView;
     }
 
-    public DatabaseDriverHibernate getDatabaseDriver() {return databaseDriver;}
+    public DatabaseDriver getDatabaseDriver() {return databaseDriver;}
 
     public boolean getClienteLogeado(){return this.clienteLogeado;}
 
@@ -113,23 +117,16 @@ public class Model {
     }
 
     public void evaluarCredencialesAdmin(String email, String password) {
-        ResultSet resultSet = null;
         try {
-            resultSet = databaseDriver.getAdminDatos(email, password);
-            if (resultSet.next()) {
-                String usuario = resultSet.getString("USUARIO");
-                String pass = resultSet.getString("PASS");
+            Admin admin = databaseDriver2.getAdminDatos(email, password);
 
-                this.admin.usuarioProperty().set(usuario);
-                this.admin.passProperty().set(pass);
-
+            if (admin != null) {
+                this.admin = admin;
                 this.adminLogeado = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error al evaluar credenciales de admin: " + e.getMessage());
-        } finally {
-            closeResultSet(resultSet);
         }
     }
 
