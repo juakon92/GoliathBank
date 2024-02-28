@@ -27,14 +27,14 @@ public class TransaccionCeldaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         etiquetaRemitente.textProperty().bind(transaccion.nombreRemitenteProperty());
-        etiquetaCantidad.textProperty().bind(transaccion.cantidadProperty().asString());
+        etiquetaCantidad.setText(String.valueOf(transaccion.getCantidad()));
         etiquetaDestinatario.textProperty().bind(transaccion.nombreDestinatarioProperty());
-        etiquetaFechTran.textProperty().bind(transaccion.fechaProperty().asString());
+        etiquetaFechTran.setText(transaccion.getFecha().toString());
         mostrarIconos();
     }
     private void mostrarIconos(){
-        System.out.println(transaccion.origenProperty().getValue());
-        if((transaccion.origenProperty().getValue()) == (obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().movilProperty().getValue()))){
+        System.out.println(transaccion.getOrigen());
+        if((transaccion.getOrigen()) == (obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil()))){
             in_icon.setFill(Color.rgb(240, 240, 240));
             out_icon.setFill(Color.RED);
         } else {

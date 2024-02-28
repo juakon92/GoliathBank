@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Model {
     private static Model model;
     private final FactoriaView factoriaView;
-    private final DatabaseDriverHibernate databaseDriver2;
-    private final DatabaseDriver databaseDriver;
+    private final DatabaseDriverHibernate databaseDriver;
     private TipoCuenta tipoCuentaLogin = TipoCuenta.CLIENTE;
 
     private final ObservableList<Transaccion> ultimasTransacciones;
@@ -34,8 +34,7 @@ public class Model {
     private Model(){
 
         this.factoriaView = new FactoriaView();
-        this.databaseDriver2 = new DatabaseDriverHibernate();
-        this.databaseDriver = new DatabaseDriver();
+        this.databaseDriver = new DatabaseDriverHibernate();
         //Sección Datos Cliente
         this.clienteLogeado = false;
         this.cliente = new Cliente("","","",null,null);
@@ -57,7 +56,7 @@ public class Model {
         return factoriaView;
     }
 
-    public DatabaseDriver getDatabaseDriver() {return databaseDriver;}
+    public DatabaseDriverHibernate getDatabaseDriver() {return databaseDriver;}
 
     public boolean getClienteLogeado(){return this.clienteLogeado;}
 
@@ -94,7 +93,7 @@ public class Model {
     public ObservableList<Cuenta> getCuentas(){return cuentas;}
     public void evaluarCredencialesCliente(String email, String password) {
         try {
-            Cliente cliente = databaseDriver2.getClientDatos(email,password);
+            Cliente cliente = databaseDriver.getClientDatos(email,password);
 
             if (cliente != null){
                 this.clienteActual = cliente;
@@ -108,7 +107,7 @@ public class Model {
 
     public void evaluarCredencialesAdmin(String email, String password) {
         try {
-            Admin admin = databaseDriver2.getAdminDatos(email, password);
+            Admin admin = databaseDriver.getAdminDatos(email, password);
 
             if (admin != null) {
                 this.admin = admin;
@@ -130,64 +129,60 @@ public class Model {
         }
     }
 
-    private void crearTransaccion(ObservableList<Transaccion> transacciones, int limite){
+    private void crearTransaccion(ObservableList<Transaccion> transacciones, int limite) {
         System.out.println("Iniciando creación de transacciones...");
-        ResultSet resultSet = databaseDriver.getTransaccion(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil()),limite);
-        System.out.println(this.cliente.getMovil());
-        try{
-            while (resultSet.next()){
-                int id_emisor = resultSet.getInt("ID_EMISOR");
-                int id_receptor = resultSet.getInt("ID_RECEPTOR");
-                double cantidad = resultSet.getDouble("CANTIDAD");
-                String[] dateParts = resultSet.getString("FECHA").split("-");
-                LocalDate fecha = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
-                String mensaje = resultSet.getString("NOTA");
-                String nombreRemitente = getDatabaseDriver().obtenerNombreUsuario(id_emisor);
-                String nombreDestinatario = getDatabaseDriver().obtenerNombreUsuario(id_receptor);
-                Transaccion transaccion = new Transaccion(id_emisor,id_receptor,cantidad,fecha,mensaje);
-                transaccion.setNombreRemitente(nombreRemitente);
-                transaccion.setNombreDestinatario(nombreDestinatario);
-                transacciones.add(transaccion);
+
+        try {
+            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil());
+            List<Transaccion> listaTransacciones = Model.getInstance().getDatabaseDriver().getTransaccion(idUsuario, limite);
+
+            for (Transaccion transaccion : listaTransacciones) {
+                int id_emisor = transaccion.getOrigen();
+                int id_receptor = transaccion.getDestino();
+                double cantidad = transaccion.getCantidad();
+                LocalDate fecha = transaccion.getFecha();
+                String mensaje = transaccion.getMensaje();
+                String nombreRemitente = Model.getInstance().getDatabaseDriver().obtenerNombreUsuario(id_emisor);
+                String nombreDestinatario = Model.getInstance().getDatabaseDriver().obtenerNombreUsuario(id_receptor);
+
+                Transaccion nuevaTransaccion = new Transaccion(id_emisor, id_receptor, cantidad, fecha, mensaje);
+                nuevaTransaccion.setNombreRemitente(nombreRemitente);
+                nuevaTransaccion.setNombreDestinatario(nombreDestinatario);
+
+                transacciones.add(nuevaTransaccion);
             }
+
             System.out.println("Creación de transacciones completada. Número de transacciones creadas: " + transacciones.size());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error al crear transacciones:");
             e.printStackTrace();
-        } finally {
-            // Asegurémonos de cerrar el ResultSet después de su uso
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    private void crearCuenta(ObservableList<Cuenta> cuentas){
+
+    private void crearCuenta(ObservableList<Cuenta> cuentas) {
         System.out.println("Iniciando creación de cuentas...");
-        ResultSet resultSet = databaseDriver.getCuenta(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil()));
-        System.out.println(this.cliente.getMovil());
+
         try {
-            while (resultSet.next()){
-                int id_emisor = resultSet.getInt("ID_USUARIO");
-                String numCuenta = resultSet.getString("NUM_CUENTA");
-                double saldo = resultSet.getDouble("SALDO");
-                cuentas.add(new Cuenta(id_emisor,numCuenta,saldo));
-            }
-        }catch (Exception e){
+            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil());
+            List<Cuenta> listaCuentas = Model.getInstance().getDatabaseDriver().getCuenta(idUsuario);
+
+            cuentas.addAll(listaCuentas);
+
+            System.out.println("Creación de cuentas completada. Número de cuentas creadas: " + cuentas.size());
+        } catch (Exception e) {
             System.out.println("Error al crear cuentas:");
             e.printStackTrace();
         }
     }
 
+
     public boolean crearNuevoUsuario(String email, String password, String name, String apellidos, String movil){
-        return databaseDriver2.insertarUsuario(email, password, name, apellidos, movil);
+        return databaseDriver.insertarUsuario(email, password, name, apellidos, movil);
     }
 
     public boolean crearNuevaCuenta(int idUsuario, String numCuenta, BigDecimal saldo){
-        return databaseDriver2.insertarCuenta(idUsuario, numCuenta, saldo);
+        return databaseDriver.insertarCuenta(idUsuario, numCuenta, saldo);
     }
 
     public void setUsuarioActual(Cliente cliente) {

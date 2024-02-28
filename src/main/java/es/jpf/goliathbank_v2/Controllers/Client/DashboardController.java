@@ -47,7 +47,7 @@ public class DashboardController implements Initializable {
     }
 
     private void addCuenta(){
-        int idUsuario = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().movilProperty().getValue());
+        int idUsuario = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
         String numCuenta = num_cuenta_ahorros.getText();
         if(checkBoxAddCuenta.isSelected()){
             BigDecimal saldoInicial = BigDecimal.ZERO;
@@ -64,6 +64,7 @@ public class DashboardController implements Initializable {
 
     private void realizarBizum() {
         String beneficiarioMovil = cajaBeneficiario.getText();
+        String mensaje = cajaNota.getText();
         BigDecimal cantidad = BigDecimal.ZERO;
 
         try {
@@ -79,7 +80,7 @@ public class DashboardController implements Initializable {
 
         if (usuarioActual != null) {
 
-            int idUsuarioEmisor = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().movilProperty().getValue());
+            int idUsuarioEmisor = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
             int idUsuarioReceptor = obtenerIdUsuarioPorMovil(beneficiarioMovil);
 
             if (idUsuarioReceptor != -1) {
@@ -93,7 +94,7 @@ public class DashboardController implements Initializable {
                 ButtonType resultado = confirmacion.showAndWait().orElse(ButtonType.CANCEL);
 
                 if (resultado == ButtonType.OK){
-                    if (Model.getInstance().getDatabaseDriver().realizarTransaccion(idUsuarioEmisor, idUsuarioReceptor, cantidad)) {
+                    if (Model.getInstance().getDatabaseDriver().realizarTransaccion(idUsuarioEmisor, idUsuarioReceptor, cantidad,mensaje)) {
                         cajaBeneficiario.clear();
                         cajaCantidad.clear();
                         cajaNota.clear();
@@ -110,7 +111,7 @@ public class DashboardController implements Initializable {
     }
 
     private void realizarConexion(){
-        user_name.textProperty().bind(Bindings.concat("Hola, ").concat(Model.getInstance().getCliente().nameProperty()));
+        user_name.textProperty().bind(Bindings.concat("Hola, ").concat(Model.getInstance().getCliente().getName()));
         etiquetaFech.setText("Hoy, " + LocalDate.now());
     }
     private int obtenerIdUsuarioPorMovil(String movil) {

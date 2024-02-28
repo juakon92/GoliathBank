@@ -22,9 +22,9 @@ public class ClienteCeldaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        etiquetaName.setText(cliente.nameProperty().get());
-        etiquetaApellidos.setText(cliente.apellidosProperty().get());
-        etiquetaMovil.setText(cliente.movilProperty().get());
-        etiquetaEmail.setText(cliente.emailProperty().get());
+        etiquetaName.setText(cliente.getName());
+        etiquetaApellidos.setText(cliente.getApellidos());
+        etiquetaMovil.setText(cliente.getMovil());
+        etiquetaEmail.setText(cliente.getEmail());
     }
 }

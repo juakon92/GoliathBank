@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table (name = "Admin")
+@Table (name = "Admin", uniqueConstraints = {@UniqueConstraint(columnNames = {"ID"})})
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

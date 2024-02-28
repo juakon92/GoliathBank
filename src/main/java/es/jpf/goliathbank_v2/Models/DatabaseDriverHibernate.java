@@ -23,6 +23,7 @@ public class DatabaseDriverHibernate{
         StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
         Metadata metadata = new MetadataSources(ssr).getMetadataBuilder().build();
         this.sessionFactory = metadata.getSessionFactoryBuilder().build();
+        initDatabase();
     }
 
     public Cliente getClientDatos(String email, String password) {
@@ -332,8 +333,6 @@ public class DatabaseDriverHibernate{
         }
     }
 
-
-
     public boolean insertarCuenta(int idUsuario, String numCuenta, BigDecimal saldo) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -348,6 +347,40 @@ public class DatabaseDriverHibernate{
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void initDatabase() {
+        try {
+            if (!adminYaInsertado()) {
+                insertarAdmin("admin", "admin");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean insertarAdmin(String usuario, String password) {
+        try (Session session = sessionFactory.openSession()) {
+            Admin admin = new Admin(usuario, password);
+            Transaction transaction = session.beginTransaction();
+            session.save(admin);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean adminYaInsertado() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("SELECT COUNT(*) FROM Admin", Long.class);
+            Long rowCount = query.uniqueResult();
+            return rowCount != null && rowCount > 0;
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

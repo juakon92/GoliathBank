@@ -121,6 +121,17 @@ public class CrearClienteController implements Initializable {
         alert.initOwner(stage);
 
         alert.showAndWait();
+
+        cajaEmail.clear();
+        cajaPass.clear();
+        cajaName.clear();
+        cajaApellidos.clear();
+        cajaMovil.clear();
+        cajaCC.clear();
+        cajaCA.clear();
+        cc_cuenta_box.setSelected(false);
+        ca_cuenta_box.setSelected(false);
+        ocultarElementos();
     }
 
     private void mostrarVentanaError() {

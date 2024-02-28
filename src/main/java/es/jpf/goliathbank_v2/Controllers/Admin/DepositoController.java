@@ -55,32 +55,28 @@ public class DepositoController implements Initializable {
 
 
     public void depositar(){
-        try {
-            String numCuenta = cajaMovil.getText();
-            int idCuenta = Model.getInstance().getDatabaseDriver().obtenerIdCuenta(numCuenta);
-            BigDecimal cantidad = BigDecimal.ZERO;
+        String numCuenta = cajaMovil.getText();
+        int idCuenta = Model.getInstance().getDatabaseDriver().obtenerIdCuenta(numCuenta);
+        BigDecimal cantidad = BigDecimal.ZERO;
 
-            if (!cajaCantidad.getText().isEmpty()) {
-                try {
-                    cantidad = new BigDecimal(cajaCantidad.getText());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    return;
-                }
-                BigDecimal saldoActual = Model.getInstance().getDatabaseDriver().getSaldoCuenta(idCuenta);
-
-                BigDecimal nuevoSaldo = saldoActual.add(cantidad);
-
-                boolean exitoDeposito = Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo);
-
-                if (exitoDeposito) {
-                    buscarCuenta();
-                } else {
-                    System.out.println("Error al realizar el depósito.");
-                }
+        if (!cajaCantidad.getText().isEmpty()) {
+            try {
+                cantidad = new BigDecimal(cajaCantidad.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                return;
             }
-        }catch (SQLException e){
-            e.printStackTrace();
+            BigDecimal saldoActual = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta);
+
+            BigDecimal nuevoSaldo = saldoActual.add(cantidad);
+
+            boolean exitoDeposito = Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo);
+
+            if (exitoDeposito) {
+                buscarCuenta();
+            } else {
+                System.out.println("Error al realizar el depósito.");
+            }
         }
     }
 }

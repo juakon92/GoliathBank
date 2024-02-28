@@ -17,7 +17,7 @@ public class CuentaCeldaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        etiquetaNumCuenta.textProperty().bind(cuenta.numCuentaProperty());
-        etiquetaSaldo.textProperty().bind(cuenta.balanceProperty().asString());
+        etiquetaNumCuenta.setText(cuenta.getNumCuenta());
+        etiquetaSaldo.setText(String.valueOf(cuenta.getBalance()));
     }
 }

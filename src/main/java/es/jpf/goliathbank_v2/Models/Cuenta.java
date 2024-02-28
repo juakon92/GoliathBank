@@ -1,7 +1,6 @@
 package es.jpf.goliathbank_v2.Models;
 
 import jakarta.persistence.*;
-import javafx.beans.property.*;
 
 @Entity
 @Table(name = "cuenta")

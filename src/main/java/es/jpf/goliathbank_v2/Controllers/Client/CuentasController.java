@@ -42,12 +42,12 @@ public class CuentasController implements Initializable {
     }
 
     private void rellenarComboBox(){
-        int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().movilProperty().getValue());
+        int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
 
         if (idUsuario != -1) {
             Model.getInstance().getCuentas().forEach(cuenta -> {
-                if (cuenta.duenioProperty().get() == idUsuario) {
-                    seleccion_cuenta.getItems().add(cuenta.numCuentaProperty().getValue());
+                if (cuenta.getDuenio() == idUsuario) {
+                    seleccion_cuenta.getItems().add(cuenta.getNumCuenta());
                 }
             });
         } else {
@@ -60,7 +60,7 @@ public class CuentasController implements Initializable {
         Cuenta cuentaSeleccionada = null;
 
         for (Cuenta cuenta : Model.getInstance().getCuentas()) {
-            if (cuenta.numCuentaProperty().getValue().equals(numCuentaSeleccionada)) {
+            if (cuenta.getNumCuenta().equals(numCuentaSeleccionada)) {
                 cuentaSeleccionada = cuenta;
                 break;
             }
@@ -76,17 +76,17 @@ public class CuentasController implements Initializable {
 
             if (checkbox_add.isSelected()) {
                 // Realizar la operación de agregar fondos
-                BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().getSaldoCuenta(idCuenta).add(cantidad);
+                BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta).add(cantidad);
                 if (Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo)) {
                     mostrarVentanaCorrecto("Operación Exitosa", "Se ha añadido fondos a la cuenta correctamente.");
                 } else {
                     mostrarVentanaError("Error", "Error al actualizar el saldo de la cuenta.");
                 }
             } else if (checkbox_less.isSelected()) {
-                System.out.println(cuentaSeleccionada.balanceProperty().getValue());
+                System.out.println(cuentaSeleccionada.getBalance());
                 // Realizar la operación de retirar fondos
-                if (cuentaSeleccionada.balanceProperty().getValue() >= 0) {
-                    BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().getSaldoCuenta(idCuenta).subtract(cantidad);
+                if (cuentaSeleccionada.getBalance() >= 0) {
+                    BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta).subtract(cantidad);
                     System.out.println(nuevoSaldo);
                     if (Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo)) {
                         mostrarVentanaCorrecto("Operación Exitosa", "Se ha retirado fondos de la cuenta correctamente.");
