@@ -1,19 +1,62 @@
 package es.jpf.goliathbank_v2.Models;
 
+import jakarta.persistence.*;
 import javafx.beans.property.*;
 
+@Entity
+@Table(name = "cuenta")
 public class Cuenta {
-    private final IntegerProperty duenio;
-    private final StringProperty numCuenta;
-    private final DoubleProperty balance;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
 
-    public Cuenta(int duenio, String numCuenta, double balance){
-        this.duenio = new SimpleIntegerProperty(this,"Dueño", duenio);
-        this.numCuenta = new SimpleStringProperty(this,"Numero de Cuenta", numCuenta);
-        this.balance = new SimpleDoubleProperty(this,"Balance", balance);
+    @Column(name = "ID_USUARIO")
+    private int duenio;
+
+    @Column(name = "NUM_CUENTA")
+    private String numCuenta;
+
+    @Column(name = "SALDO")
+    private double balance;
+
+    public Cuenta() {}
+
+    public Cuenta(int duenio, String numCuenta, double balance) {
+        this.duenio = duenio;
+        this.numCuenta = numCuenta;
+        this.balance = balance;
     }
 
-    public IntegerProperty duenioProperty(){return duenio;}
-    public StringProperty numCuentaProperty(){return numCuenta;}
-    public DoubleProperty balanceProperty(){return balance;}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDuenio() {
+        return duenio;
+    }
+
+    public void setDuenio(int duenio) {
+        this.duenio = duenio;
+    }
+
+    public String getNumCuenta() {
+        return numCuenta;
+    }
+
+    public void setNumCuenta(String numCuenta) {
+        this.numCuenta = numCuenta;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

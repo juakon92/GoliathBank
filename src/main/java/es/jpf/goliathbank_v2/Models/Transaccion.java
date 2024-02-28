@@ -1,46 +1,98 @@
 package es.jpf.goliathbank_v2.Models;
 
+import jakarta.persistence.*;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "transaccion")
 public class Transaccion {
-    private final IntegerProperty origen;
-    private final IntegerProperty destino;
-    private final DoubleProperty cantidad;
-    private final ObjectProperty<LocalDate> fecha;
-    private final StringProperty mensaje;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
+    @Column(name = "ID_EMISOR")
+    private int origen;
+
+    @Column(name = "ID_RECEPTOR")
+    private int destino;
+
+    @Column(name = "CANTIDAD")
+    private double cantidad;
+
+    @Column(name = "FECHA")
+    private LocalDate fecha;
+
+    @Column(name = "NOTA")
+    private String mensaje;
+
+    @Transient
     private StringProperty nombreRemitente;
+
+    @Transient
     private StringProperty nombreDestinatario;
 
+    public Transaccion(){}
+
     public Transaccion(int origen, int destino, double cantidad, LocalDate fecha, String mensaje){
-        this.origen = new SimpleIntegerProperty(this,"Origen", origen);
-        this.destino = new SimpleIntegerProperty(this,"Destino", destino);
-        this.cantidad = new SimpleDoubleProperty(this,"Cantidad", cantidad);
-        this.fecha = new SimpleObjectProperty<>(this, "Fecha",fecha);
-        this.mensaje = new SimpleStringProperty(this, "Mensaje", mensaje);
-        this.nombreRemitente = new SimpleStringProperty(this,"NombreRemitente","");
-        this.nombreDestinatario = new SimpleStringProperty(this,"NombreDestinatario","");
+        this.origen = origen;
+        this.destino = destino;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.mensaje = mensaje;
+        this.nombreRemitente = new SimpleStringProperty(this, "NombreRemitente", "");
+        this.nombreDestinatario = new SimpleStringProperty(this, "NombreDestinatario", "");
     }
 
-    public IntegerProperty origenProperty(){return this.origen;}
+    public int getId() {
+        return id;
+    }
 
-    public IntegerProperty destinoProperty(){return this.destino;}
+    public int getOrigen() {
+        return origen;
+    }
 
-    public DoubleProperty cantidadProperty(){return this.cantidad;}
+    public int getDestino() {
+        return destino;
+    }
 
-    public ObjectProperty<LocalDate> fechaProperty(){return this.fecha;}
+    public double getCantidad() {
+        return cantidad;
+    }
 
-    public StringProperty mensajeProperty(){return this.mensaje;}
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
-    public StringProperty nombreRemitenteProperty() {return nombreRemitente;}
-    public StringProperty nombreDestinatarioProperty() {return nombreDestinatario;}
+    public String getMensaje() {
+        return mensaje;
+    }
+    @Transient
+    public StringProperty nombreRemitenteProperty() {
+        return nombreRemitente;
+    }
 
-    public String getNombreRemitente() {return nombreRemitente.get();}
+    @Transient
+    public StringProperty nombreDestinatarioProperty() {
+        return nombreDestinatario;
+    }
 
-    public void setNombreRemitente(String nombreRemitente) {this.nombreRemitente.set(nombreRemitente);}
+    @Transient
+    public String getNombreRemitente() {
+        return nombreRemitente.get();
+    }
 
-    public String getNombreDestinatario() {return nombreDestinatario.get();}
+    public void setNombreRemitente(String nombreRemitente) {
+        this.nombreRemitente.set(nombreRemitente);
+    }
 
-    public void setNombreDestinatario(String nombreDestinatario) {this.nombreDestinatario.set(nombreDestinatario);}
+    @Transient
+    public String getNombreDestinatario() {
+        return nombreDestinatario.get();
+    }
+
+    public void setNombreDestinatario(String nombreDestinatario) {
+        this.nombreDestinatario.set(nombreDestinatario);
+    }
 }

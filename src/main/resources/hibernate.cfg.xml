@@ -7,5 +7,8 @@
         <property name="connection.username">root</property>
         <property name="connection.password">deca4951_</property>
         <mapping class="es.jpf.goliathbank_v2.Models.Admin"/>
+        <mapping class="es.jpf.goliathbank_v2.Models.Cliente"/>
+        <mapping class="es.jpf.goliathbank_v2.Models.Cuenta"/>
+        <mapping class="es.jpf.goliathbank_v2.Models.Transaccion"/>
     </session-factory>
 </hibernate-configuration>

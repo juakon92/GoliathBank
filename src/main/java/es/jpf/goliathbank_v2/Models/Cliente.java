@@ -1,44 +1,81 @@
 package es.jpf.goliathbank_v2.Models;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import jakarta.persistence.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.time.LocalDate;
-
+@Entity
+@Table(name = "usuario")
 public class Cliente {
-    private final StringProperty email;
-    private final StringProperty password;
-    private final StringProperty name;
-    private final StringProperty apellidos;
-    private final StringProperty movil;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "PASS")
+    private String password;
+
+    @Column(name = "NOMBRE")
+    private String name;
+
+    @Column(name = "APELLIDOS")
+    private String apellidos;
+
+    @Column(name = "NUM_TLFN")
+    private String movil;
+
+    public Cliente() {
+        // Constructor vacío requerido por Hibernate
+    }
 
     public Cliente(String email, String password, String name, String apellidos, String movil) {
-        this.email = new SimpleStringProperty(this, "Email", email);
-        this.password = new SimpleStringProperty(this, "Password", password);
-        this.name = new SimpleStringProperty(this, "Nombre", name);
-        this.apellidos = new SimpleStringProperty(this, "Apellidos", apellidos);
-        this.movil = new SimpleStringProperty(this, "Movil", movil);
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.apellidos = apellidos;
+        this.movil = movil;
     }
 
-    public StringProperty emailProperty() {
-        return this.email;
+    public String getEmail() {
+        return email;
     }
 
-    public StringProperty passwordProperty() {
-        return this.password;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public StringProperty nameProperty() {
-        return this.name;
+    public String getPassword() {
+        return password;
     }
 
-    public StringProperty apellidosProperty(){return this.apellidos;}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public StringProperty movilProperty() {
-        return this.movil;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getMovil() {
+        return movil;
+    }
+
+    public void setMovil(String movil) {
+        this.movil = movil;
     }
 
     public int getId() {

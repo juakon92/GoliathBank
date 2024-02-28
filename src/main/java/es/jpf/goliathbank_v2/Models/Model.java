@@ -4,8 +4,6 @@ import es.jpf.goliathbank_v2.Views.FactoriaView;
 import es.jpf.goliathbank_v2.Views.TipoCuenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -95,24 +93,16 @@ public class Model {
     }
     public ObservableList<Cuenta> getCuentas(){return cuentas;}
     public void evaluarCredencialesCliente(String email, String password) {
-        ResultSet resultSet = null;
         try {
-            resultSet = databaseDriver.getClientDatos(email, password);
-            if (resultSet.next()) {
-                String nombre = resultSet.getString("NOMBRE");
-                String apellidos = resultSet.getString("APELLIDOS");
-                String numTlfn = resultSet.getString("NUM_TLFN");
+            Cliente cliente = databaseDriver2.getClientDatos(email,password);
 
-                this.cliente.nameProperty().set(nombre);
-                this.cliente.apellidosProperty().set(apellidos);
-                this.cliente.movilProperty().set(numTlfn);
-
+            if (cliente != null){
+                this.clienteActual = cliente;
                 this.clienteLogeado = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeResultSet(resultSet);
+            System.out.println("Error al evaluar credenciales de cliente: " + e.getMessage());
         }
     }
 
@@ -142,8 +132,8 @@ public class Model {
 
     private void crearTransaccion(ObservableList<Transaccion> transacciones, int limite){
         System.out.println("Iniciando creación de transacciones...");
-        ResultSet resultSet = databaseDriver.getTransaccion(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.movilProperty().get()),limite);
-        System.out.println(this.cliente.movilProperty().get());
+        ResultSet resultSet = databaseDriver.getTransaccion(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil()),limite);
+        System.out.println(this.cliente.getMovil());
         try{
             while (resultSet.next()){
                 int id_emisor = resultSet.getInt("ID_EMISOR");
@@ -177,8 +167,8 @@ public class Model {
 
     private void crearCuenta(ObservableList<Cuenta> cuentas){
         System.out.println("Iniciando creación de cuentas...");
-        ResultSet resultSet = databaseDriver.getCuenta(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.movilProperty().get()));
-        System.out.println(this.cliente.movilProperty().get());
+        ResultSet resultSet = databaseDriver.getCuenta(Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil()));
+        System.out.println(this.cliente.getMovil());
         try {
             while (resultSet.next()){
                 int id_emisor = resultSet.getInt("ID_USUARIO");
@@ -193,11 +183,11 @@ public class Model {
     }
 
     public boolean crearNuevoUsuario(String email, String password, String name, String apellidos, String movil){
-        return databaseDriver.insertarUsuario(email, password, name, apellidos, movil);
+        return databaseDriver2.insertarUsuario(email, password, name, apellidos, movil);
     }
 
     public boolean crearNuevaCuenta(int idUsuario, String numCuenta, BigDecimal saldo){
-        return databaseDriver.insertarCuenta(idUsuario, numCuenta, saldo);
+        return databaseDriver2.insertarCuenta(idUsuario, numCuenta, saldo);
     }
 
     public void setUsuarioActual(Cliente cliente) {

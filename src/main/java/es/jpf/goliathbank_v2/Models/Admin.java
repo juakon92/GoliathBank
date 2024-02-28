@@ -8,16 +8,14 @@ import jakarta.persistence.*;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="ID")
     private int id;
     @Column(name="usuario")
     private String usuario;
     @Column(name="pass")
     private String pass;
 
-    public Admin() {
-        // Constructor vacío requerido por Hibernate
-    }
+    public Admin() {}
 
     public Admin(String usuario, String pass) {
         this.usuario = usuario;
