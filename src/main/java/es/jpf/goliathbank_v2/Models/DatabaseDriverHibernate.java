@@ -110,11 +110,17 @@ public class DatabaseDriverHibernate{
             query.setParameter("movil", movil);
 
             List<Integer> resultList = query.list();
-            return resultList.isEmpty() ? -1 : resultList.get(0);
+            if (!resultList.isEmpty()) {
+                return resultList.get(0);
+            } else {
+                System.out.println("No se encontró ningún usuario con el número de móvil: " + movil);
+                return -1;
+            }
         } catch (Exception e) {
+            System.out.println("Error al obtener el ID del usuario por número de móvil: " + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("Error al obtener el ID del usuario por número de móvil", e);
         }
-        return -1;
     }
 
     public String obtenerNombreUsuario(int idUsuario) {

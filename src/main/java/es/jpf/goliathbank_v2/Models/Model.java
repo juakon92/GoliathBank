@@ -165,6 +165,7 @@ public class Model {
 
         try {
             int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil());
+            System.out.println(idUsuario);
             List<Cuenta> listaCuentas = Model.getInstance().getDatabaseDriver().getCuenta(idUsuario);
 
             cuentas.addAll(listaCuentas);

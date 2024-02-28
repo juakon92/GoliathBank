@@ -42,7 +42,9 @@ public class CuentasController implements Initializable {
     }
 
     private void rellenarComboBox(){
-        int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
+        int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil());
+
+        System.out.println(idUsuario);
 
         if (idUsuario != -1) {
             Model.getInstance().getCuentas().forEach(cuenta -> {

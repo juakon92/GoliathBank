@@ -31,6 +31,7 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println(Model.getInstance().getUsuarioActualCliente().getId());
         realizarConexion();
         checkBoxAddCuenta.selectedProperty().addListener((observable, oldValue, newValue) ->{
             if (newValue) {
@@ -111,7 +112,7 @@ public class DashboardController implements Initializable {
     }
 
     private void realizarConexion(){
-        user_name.textProperty().bind(Bindings.concat("Hola, ").concat(Model.getInstance().getCliente().getName()));
+        user_name.textProperty().bind(Bindings.concat("Hola, ").concat(Model.getInstance().getUsuarioActualCliente().getName()));
         etiquetaFech.setText("Hoy, " + LocalDate.now());
     }
     private int obtenerIdUsuarioPorMovil(String movil) {
