@@ -2,6 +2,8 @@ package es.jpf.goliathbank_v2.Models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "cuenta")
 public class Cuenta {
@@ -17,11 +19,11 @@ public class Cuenta {
     private String numCuenta;
 
     @Column(name = "SALDO")
-    private double balance;
+    private BigDecimal balance;
 
     public Cuenta() {}
 
-    public Cuenta(int duenio, String numCuenta, double balance) {
+    public Cuenta(int duenio, String numCuenta, BigDecimal balance) {
         this.duenio = duenio;
         this.numCuenta = numCuenta;
         this.balance = balance;
@@ -51,11 +53,11 @@ public class Cuenta {
         this.numCuenta = numCuenta;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

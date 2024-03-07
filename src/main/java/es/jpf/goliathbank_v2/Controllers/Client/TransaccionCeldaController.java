@@ -34,7 +34,7 @@ public class TransaccionCeldaController implements Initializable {
     }
     private void mostrarIconos(){
         System.out.println(transaccion.getOrigen());
-        if((transaccion.getOrigen()) == (obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil()))){
+        if((transaccion.getOrigen()) == (obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil()))){
             in_icon.setFill(Color.rgb(240, 240, 240));
             out_icon.setFill(Color.RED);
         } else {

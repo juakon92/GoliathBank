@@ -141,18 +141,30 @@ public class DatabaseDriverHibernate{
             Transaction transaction = session.beginTransaction();
 
             try {
-                String hql = "UPDATE Cuenta SET balance = :newBalance WHERE duenio = :idUsuario";
-                Query query = session.createQuery(hql);
-                query.setParameter("newBalance", newBalance.doubleValue());
-                query.setParameter("idUsuario", idUsuario);
+                String hqlSelect = "SELECT c FROM Cuenta c WHERE c.duenio = :idUsuario";
+                Query querySelect = session.createQuery(hqlSelect);
+                querySelect.setParameter("idUsuario", idUsuario);
+                querySelect.setMaxResults(1);
+                Cuenta cuenta = (Cuenta) querySelect.uniqueResult();
 
-                int filasAfectadas = query.executeUpdate();
+                if (cuenta != null) {
+                    // Then, update the balance of the selected account
+                    String hqlUpdate = "UPDATE Cuenta SET balance = :newBalance WHERE id = :cuentaId";
+                    Query queryUpdate = session.createQuery(hqlUpdate);
+                    queryUpdate.setParameter("newBalance", newBalance.doubleValue());
+                    queryUpdate.setParameter("cuentaId", cuenta.getId());
+                    int filasAfectadas = queryUpdate.executeUpdate();
 
-                System.out.println("Filas afectadas por la actualización: " + filasAfectadas);
+                    System.out.println("Filas afectadas por la actualización: " + filasAfectadas);
 
-                transaction.commit();
-
-                return filasAfectadas > 0;
+                    transaction.commit();
+                    return filasAfectadas > 0;
+                } else {
+                    // Handle case where no account is found
+                    System.out.println("No se encontró ninguna cuenta para el usuario con ID: " + idUsuario);
+                    transaction.commit();
+                    return false;
+                }
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
@@ -195,22 +207,17 @@ public class DatabaseDriverHibernate{
             Transaction transaction = session.beginTransaction();
 
             try {
-                double emisorBalanceDouble = obtenerSaldoCuentaPorUsuario(idEmisor);
-                BigDecimal emisorBalance = BigDecimal.valueOf(emisorBalanceDouble);
+                BigDecimal emisorBalance = obtenerSaldoCuentaPorUsuario(idEmisor);
                 if (emisorBalance.compareTo(cantidad) < 0) {
                     transaction.rollback();
                     return false;
                 }
 
-                Transaccion transaccion = new Transaccion(idEmisor, idReceptor, cantidad.doubleValue(), new Date(System.currentTimeMillis()).toLocalDate(), mensaje);
+                Transaccion transaccion = new Transaccion(idEmisor, idReceptor, cantidad.doubleValue(), LocalDate.now(), mensaje);
                 session.save(transaccion);
 
-                double nuevoSaldoEmisorDouble = emisorBalance.subtract(cantidad).doubleValue();
-                BigDecimal nuevoSaldoEmisor = BigDecimal.valueOf(nuevoSaldoEmisorDouble);
-
-                double receptorBalanceDouble = obtenerSaldoCuentaPorUsuario(idReceptor);
-                BigDecimal receptorBalance = BigDecimal.valueOf(receptorBalanceDouble);
-
+                BigDecimal nuevoSaldoEmisor = emisorBalance.subtract(cantidad);
+                BigDecimal receptorBalance = obtenerSaldoCuentaPorUsuario(idReceptor);
                 BigDecimal nuevoSaldoReceptor = receptorBalance.add(cantidad);
 
                 boolean actualizacionEmisor = actualizarSaldoCuenta(idEmisor, nuevoSaldoEmisor);
@@ -233,23 +240,27 @@ public class DatabaseDriverHibernate{
         }
     }
 
-    public double obtenerSaldoCuentaPorUsuario(int idUsuario) {
+
+    public BigDecimal obtenerSaldoCuentaPorUsuario(int idUsuario) {
+        System.out.println(idUsuario);
         try (Session session = sessionFactory.openSession()) {
-            Query<Double> query = session.createQuery("SELECT balance FROM Cuenta WHERE duenio = :idUsuario", Double.class);
+            Query<BigDecimal> query = session.createQuery("SELECT balance FROM Cuenta WHERE duenio = :idUsuario", BigDecimal.class);
             query.setParameter("idUsuario", idUsuario);
 
-            List<Double> resultList = query.list();
+            List<BigDecimal> resultList = query.list();
+            System.out.println(resultList);
             if (!resultList.isEmpty()) {
                 return resultList.get(0);
-            }else {
+            } else {
                 System.out.println("No se encontraron resultados para la consulta HQL.");
-                return 0.0;
+                return BigDecimal.ZERO;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         throw new RuntimeException("No se pudo obtener el saldo de la cuenta");
     }
+
 
     public int obtenerIdUsuarioPorCuenta(String numCuenta) {
         try (Session session = sessionFactory.openSession()) {
@@ -308,6 +319,8 @@ public class DatabaseDriverHibernate{
             List<BigDecimal> resultList = query.list();
             if (!resultList.isEmpty()) {
                 return resultList.get(0);
+            }else {
+                return BigDecimal.ZERO;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -352,7 +365,7 @@ public class DatabaseDriverHibernate{
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            Cuenta cuenta = new Cuenta(idUsuario, numCuenta, saldo.doubleValue());
+            Cuenta cuenta = new Cuenta(idUsuario, numCuenta, saldo);
             session.save(cuenta);
 
             transaction.commit();

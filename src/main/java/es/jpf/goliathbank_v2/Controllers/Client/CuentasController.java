@@ -90,7 +90,7 @@ public class CuentasController implements Initializable {
             } else if (checkbox_less.isSelected()) {
                 System.out.println(cuentaSeleccionada.getBalance());
                 // Realizar la operación de retirar fondos
-                if (cuentaSeleccionada.getBalance() >= 0) {
+                if (cuentaSeleccionada.getBalance().compareTo(BigDecimal.ZERO) >= 0) {
                     BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta).subtract(cantidad);
                     System.out.println(nuevoSaldo);
                     if (Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo)) {

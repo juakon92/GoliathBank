@@ -49,7 +49,7 @@ public class DashboardController implements Initializable {
     }
 
     private void addCuenta(){
-        int idUsuario = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
+        int idUsuario = obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil());
         String numCuenta = num_cuenta_ahorros.getText();
         if(checkBoxAddCuenta.isSelected()){
             BigDecimal saldoInicial = BigDecimal.ZERO;
@@ -82,7 +82,7 @@ public class DashboardController implements Initializable {
 
         if (usuarioActual != null) {
 
-            int idUsuarioEmisor = obtenerIdUsuarioPorMovil(Model.getInstance().getCliente().getMovil());
+            int idUsuarioEmisor = obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil());
             int idUsuarioReceptor = obtenerIdUsuarioPorMovil(beneficiarioMovil);
 
             if (idUsuarioReceptor != -1) {
