@@ -5,7 +5,6 @@ import es.jpf.goliathbank_v2.Models.Model;
 import es.jpf.goliathbank_v2.Views.CuentaCeldaFactory;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import org.controlsfx.control.PropertySheet;
 
 import java.math.BigDecimal;
 import java.net.URL;

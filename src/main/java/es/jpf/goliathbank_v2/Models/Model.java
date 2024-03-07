@@ -37,7 +37,8 @@ public class Model {
         this.databaseDriver = new DatabaseDriverHibernate();
         //Sección Datos Cliente
         this.clienteLogeado = false;
-        this.cliente = new Cliente("","","",null,null);
+        this.cliente = new Cliente("","","","","");
+        this.setUsuarioActual(cliente);
         this.ultimasTransacciones = FXCollections.observableArrayList();
         this.todasTransacciones = FXCollections.observableArrayList();
         this.cuentas = FXCollections.observableArrayList();
@@ -98,6 +99,7 @@ public class Model {
             if (cliente != null){
                 this.clienteActual = cliente;
                 this.clienteLogeado = true;
+                System.out.println("Número de móvil: " + cliente.getMovil());
             }
         } catch (Exception e) {
             e.printStackTrace();

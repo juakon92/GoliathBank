@@ -32,6 +32,7 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println(Model.getInstance().getUsuarioActualCliente().getId());
+        System.out.println(Model.getInstance().getUsuarioActualCliente().getMovil());
         realizarConexion();
         checkBoxAddCuenta.selectedProperty().addListener((observable, oldValue, newValue) ->{
             if (newValue) {

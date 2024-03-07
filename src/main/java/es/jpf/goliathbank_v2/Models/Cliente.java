@@ -1,8 +1,6 @@
 package es.jpf.goliathbank_v2.Models;
 
 import jakarta.persistence.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 @Entity
 @Table(name = "usuario")
