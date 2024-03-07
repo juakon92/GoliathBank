@@ -135,7 +135,7 @@ public class Model {
         System.out.println("Iniciando creación de transacciones...");
 
         try {
-            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil());
+            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(getUsuarioActualCliente().getMovil());
             List<Transaccion> listaTransacciones = Model.getInstance().getDatabaseDriver().getTransaccion(idUsuario, limite);
 
             for (Transaccion transaccion : listaTransacciones) {
@@ -166,7 +166,8 @@ public class Model {
         System.out.println("Iniciando creación de cuentas...");
 
         try {
-            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(this.cliente.getMovil());
+            System.out.println("Movil model: " + getUsuarioActualCliente().getMovil());
+            int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(getUsuarioActualCliente().getMovil());
             System.out.println(idUsuario);
             List<Cuenta> listaCuentas = Model.getInstance().getDatabaseDriver().getCuenta(idUsuario);
 

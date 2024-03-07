@@ -3,6 +3,7 @@ package es.jpf.goliathbank_v2.Controllers.Client;
 import es.jpf.goliathbank_v2.Models.Cuenta;
 import es.jpf.goliathbank_v2.Models.Model;
 import es.jpf.goliathbank_v2.Views.CuentaCeldaFactory;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
@@ -41,15 +42,18 @@ public class CuentasController implements Initializable {
     }
 
     private void rellenarComboBox(){
+        System.out.println("Movil: " + Model.getInstance().getUsuarioActualCliente().getMovil());
         int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil());
 
-        System.out.println(idUsuario);
+        System.out.println("ID: "+idUsuario);
 
         if (idUsuario != -1) {
-            Model.getInstance().getCuentas().forEach(cuenta -> {
-                if (cuenta.getDuenio() == idUsuario) {
-                    seleccion_cuenta.getItems().add(cuenta.getNumCuenta());
-                }
+            Platform.runLater(() -> {
+                Model.getInstance().getCuentas().forEach(cuenta -> {
+                    if (cuenta.getDuenio() == idUsuario) {
+                        seleccion_cuenta.getItems().add(cuenta.getNumCuenta());
+                    }
+                });
             });
         } else {
             System.out.println("No se pudo obtener el ID del usuario.");

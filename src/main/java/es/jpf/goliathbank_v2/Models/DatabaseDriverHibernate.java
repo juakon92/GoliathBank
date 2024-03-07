@@ -195,7 +195,8 @@ public class DatabaseDriverHibernate{
             Transaction transaction = session.beginTransaction();
 
             try {
-                BigDecimal emisorBalance = obtenerSaldoCuentaPorUsuario(idEmisor);
+                double emisorBalanceDouble = obtenerSaldoCuentaPorUsuario(idEmisor);
+                BigDecimal emisorBalance = BigDecimal.valueOf(emisorBalanceDouble);
                 if (emisorBalance.compareTo(cantidad) < 0) {
                     transaction.rollback();
                     return false;
@@ -204,8 +205,12 @@ public class DatabaseDriverHibernate{
                 Transaccion transaccion = new Transaccion(idEmisor, idReceptor, cantidad.doubleValue(), new Date(System.currentTimeMillis()).toLocalDate(), mensaje);
                 session.save(transaccion);
 
-                BigDecimal nuevoSaldoEmisor = emisorBalance.subtract(cantidad);
-                BigDecimal receptorBalance = obtenerSaldoCuentaPorUsuario(idReceptor);
+                double nuevoSaldoEmisorDouble = emisorBalance.subtract(cantidad).doubleValue();
+                BigDecimal nuevoSaldoEmisor = BigDecimal.valueOf(nuevoSaldoEmisorDouble);
+
+                double receptorBalanceDouble = obtenerSaldoCuentaPorUsuario(idReceptor);
+                BigDecimal receptorBalance = BigDecimal.valueOf(receptorBalanceDouble);
+
                 BigDecimal nuevoSaldoReceptor = receptorBalance.add(cantidad);
 
                 boolean actualizacionEmisor = actualizarSaldoCuenta(idEmisor, nuevoSaldoEmisor);
@@ -228,14 +233,17 @@ public class DatabaseDriverHibernate{
         }
     }
 
-    public BigDecimal obtenerSaldoCuentaPorUsuario(int idUsuario) {
+    public double obtenerSaldoCuentaPorUsuario(int idUsuario) {
         try (Session session = sessionFactory.openSession()) {
-            Query<BigDecimal> query = session.createQuery("SELECT balance FROM Cuenta WHERE duenio = :idUsuario", BigDecimal.class);
+            Query<Double> query = session.createQuery("SELECT balance FROM Cuenta WHERE duenio = :idUsuario", Double.class);
             query.setParameter("idUsuario", idUsuario);
 
-            List<BigDecimal> resultList = query.list();
+            List<Double> resultList = query.list();
             if (!resultList.isEmpty()) {
                 return resultList.get(0);
+            }else {
+                System.out.println("No se encontraron resultados para la consulta HQL.");
+                return 0.0;
             }
         } catch (Exception e) {
             e.printStackTrace();
