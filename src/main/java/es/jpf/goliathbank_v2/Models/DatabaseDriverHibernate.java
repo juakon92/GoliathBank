@@ -148,7 +148,6 @@ public class DatabaseDriverHibernate{
                 Cuenta cuenta = (Cuenta) querySelect.uniqueResult();
 
                 if (cuenta != null) {
-                    // Then, update the balance of the selected account
                     String hqlUpdate = "UPDATE Cuenta SET balance = :newBalance WHERE id = :cuentaId";
                     Query queryUpdate = session.createQuery(hqlUpdate);
                     queryUpdate.setParameter("newBalance", newBalance.doubleValue());
@@ -160,7 +159,6 @@ public class DatabaseDriverHibernate{
                     transaction.commit();
                     return filasAfectadas > 0;
                 } else {
-                    // Handle case where no account is found
                     System.out.println("No se encontró ninguna cuenta para el usuario con ID: " + idUsuario);
                     transaction.commit();
                     return false;
@@ -341,22 +339,6 @@ public class DatabaseDriverHibernate{
             e.printStackTrace();
             System.out.println("Error al obtener cuentas: " + e.getMessage());
             return null;
-        }
-    }
-
-    public boolean insertarTransaccion(int idEmisor, int idReceptor, BigDecimal cantidad, LocalDate fecha, String mensaje) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            Transaccion transaccion = new Transaccion(idEmisor, idReceptor, cantidad.doubleValue(), fecha, mensaje);
-            session.save(transaccion);
-
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error al insertar transacción: " + e.getMessage());
-            return false;
         }
     }
 

@@ -42,10 +42,7 @@ public class CuentasController implements Initializable {
     }
 
     private void rellenarComboBox(){
-        System.out.println("Movil: " + Model.getInstance().getUsuarioActualCliente().getMovil());
         int idUsuario = Model.getInstance().getDatabaseDriver().obtenerIdUsuarioPorMovil(Model.getInstance().getUsuarioActualCliente().getMovil());
-
-        System.out.println("ID: "+idUsuario);
 
         if (idUsuario != -1) {
             Platform.runLater(() -> {
@@ -80,7 +77,6 @@ public class CuentasController implements Initializable {
             }
 
             if (checkbox_add.isSelected()) {
-                // Realizar la operación de agregar fondos
                 BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta).add(cantidad);
                 if (Model.getInstance().getDatabaseDriver().actualizarSaldoCuentaPorID(idCuenta, nuevoSaldo)) {
                     mostrarVentanaCorrecto("Operación Exitosa", "Se ha añadido fondos a la cuenta correctamente.");
@@ -88,8 +84,6 @@ public class CuentasController implements Initializable {
                     mostrarVentanaError("Error", "Error al actualizar el saldo de la cuenta.");
                 }
             } else if (checkbox_less.isSelected()) {
-                System.out.println(cuentaSeleccionada.getBalance());
-                // Realizar la operación de retirar fondos
                 if (cuentaSeleccionada.getBalance().compareTo(BigDecimal.ZERO) >= 0) {
                     BigDecimal nuevoSaldo = Model.getInstance().getDatabaseDriver().obtenerSaldoCuenta(idCuenta).subtract(cantidad);
                     System.out.println(nuevoSaldo);
@@ -105,7 +99,6 @@ public class CuentasController implements Initializable {
                 mostrarVentanaError("Error", "Seleccione una operación para continuar.");
             }
 
-            // Limpiar el ComboBox y la cajaCantidad después de la operación
             seleccion_cuenta.getSelectionModel().clearSelection();
             cajaCantidad.clear();
         } else {

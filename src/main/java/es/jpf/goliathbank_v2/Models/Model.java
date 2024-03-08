@@ -15,8 +15,6 @@ public class Model {
     private static Model model;
     private final FactoriaView factoriaView;
     private final DatabaseDriverHibernate databaseDriver;
-    private TipoCuenta tipoCuentaLogin = TipoCuenta.CLIENTE;
-
     private final ObservableList<Transaccion> ultimasTransacciones;
     private final ObservableList<Transaccion> todasTransacciones;
     private final ObservableList<Cuenta> cuentas;
@@ -118,16 +116,6 @@ public class Model {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error al evaluar credenciales de admin: " + e.getMessage());
-        }
-    }
-
-    private void closeResultSet(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
